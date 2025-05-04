@@ -97,21 +97,54 @@
                 // Preenche a lista de softwares instalados
                 const softwareListDiv = document.getElementById("softwareList");
                 softwareListDiv.innerHTML = ""; // Limpar antes de adicionar
-                laboratory.softwaresInstalled.forEach(software => {
-                    const softwareBadge = document.createElement("span");
-                    softwareBadge.classList.add("badge", "badge-software");
-                    softwareBadge.textContent = software.softwareName;
-                    softwareListDiv.appendChild(softwareBadge);
+
+                const softwaresResponse = await fetch(`http://localhost:8080/software`, {
+                    headers: {
+                        Authorization: "Bearer " + token,
+                        "Content-Type": "application/json"
+                    }
                 });
+                const softwares = await softwaresResponse.json();
+
+                softwares.forEach(software => {
+                    const softwareDiv = document.createElement("div");
+                    softwareDiv.classList.add("form-check");
+
+                    const checkbox = document.createElement("input");
+                    checkbox.classList.add("form-check-input");
+                    checkbox.type = "checkbox";
+                    checkbox.value = software.softwareId;
+                    checkbox.id = `software-${software.softwareId}`;
+
+                    if (laboratory.softwaresInstalled.some(s => s.softwareId === software.softwareId)) {
+                        checkbox.checked = true;
+                    }
+
+                    const label = document.createElement("label");
+                    label.classList.add("form-check-label");
+                    label.setAttribute("for", `software-${software.softwareId}`);
+                    label.innerText = software.softwareName;
+
+                    softwareDiv.appendChild(checkbox);
+                    softwareDiv.appendChild(label);
+
+                    softwareListDiv.appendChild(softwareDiv);
+                });
+
 
                 // Formulário de envio
                 document.getElementById("editLaboratoryForm").addEventListener("submit", async function (event) {
                     event.preventDefault();
 
+                    const selectedSoftwares = [...document.querySelectorAll('#softwareList input:checked')]
+                        .map(input => input.value);
+
                     const updatedLaboratory = {
                         laboratoryName: document.getElementById("laboratoryName").value,
-                        laboratoryAvailability: document.getElementById("laboratoryAvailability").checked
+                        laboratoryAvailability: document.getElementById("laboratoryAvailability").checked,
+                        softwaresInstalled: selectedSoftwares
                     };
+
 
                     const updateResponse = await fetch(`http://localhost:8080/laboratory/${labId}`, {
                         method: "PUT",

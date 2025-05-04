@@ -91,7 +91,7 @@
 <body>
     <header class="header p-3 mb-4">
         <h1><i class="bi bi-shield-lock"></i> Painel do Administrador</h1>
-        <a href="/pages/index.html" class="btn btn-logout">
+        <a href="/pages/index.html" class="btn btn-logout" onclick="Logout()">
             <i class="bi bi-box-arrow-left"></i> Sair
         </a>
     </header>
@@ -290,6 +290,11 @@
             // Fechar modal
             var modal = bootstrap.Modal.getInstance(document.getElementById('editarSolicitacaoModal'));
             modal.hide();
+        }
+
+        function Logout(){
+            localStorage.removeItem('token');
+            window.location.href = "index.html";
         }
     </script>
 </body>

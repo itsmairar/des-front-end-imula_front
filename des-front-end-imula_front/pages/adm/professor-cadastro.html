@@ -61,11 +61,6 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="matricula" class="form-label">Matrícula:</label>
-                            <input type="text" class="form-control" id="matricula">
-                        </div>
-
-                        <div class="mb-3">
                             <label for="email" class="form-label">E-mail:</label>
                             <input type="email" class="form-control" id="email" required>
                         </div>
@@ -105,14 +100,14 @@
                     fullname: document.getElementById('nome').value,
                     email: document.getElementById('email').value,
                     password: document.getElementById('senha').value,
-                    enterprise: document.getElementById('instituicao').value,
-                    matricula: document.getElementById('matricula').value || null
+                    enterprise: document.getElementById('instituicao').value
                 };
                 
                 const response = await fetch('http://localhost:8080/user/new', {
-                    method: 'POST',
+                    method: "POST",
                     headers: {
-                        'Content-Type': 'application/json',
+                    Authorization: "Bearer " + localStorage.getItem("token"),
+                    "Content-Type": "application/json",
                     },
                     body: JSON.stringify(formData)
                 });
