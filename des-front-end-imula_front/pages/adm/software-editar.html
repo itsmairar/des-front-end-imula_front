@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>InstaLab - Editar Software</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <style>
+    :root {
+      --color1: #2d2d29;
+      --color2: #215a6d;
+      --color3: #3ca2a2;
+      --color4: #92c7a3;
+      --color5: #dfece6;
+    }
+    body {
+      background-color: var(--color5);
+    }
+    .form-container {
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .btn-submit {
+      background-color: var(--color2);
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="form-container p-4">
+          <h2 class="mb-4"><i class="bi bi-pencil"></i> Editar Software</h2>
+
+          <form id="editarSoftwareForm">
+            <!-- Nome -->
+            <div class="mb-3">
+              <label for="nome" class="form-label">Nome do Software:</label>
+              <input type="text" class="form-control" id="nome" required />
+            </div>
+
+            <!-- Versão -->
+            <div class="mb-3">
+              <label for="versao" class="form-label">Versão:</label>
+              <input type="text" class="form-control" id="versao" required />
+            </div>
+
+            <!-- Link -->
+            <div class="mb-3">
+              <label for="linksoftware" class="form-label">Link do Software:</label>
+              <input type="text" class="form-control" id="linksoftware" required />
+            </div>
+
+
+
+            <!-- Tipo -->
+            <div class="mb-3">
+              <label class="form-label">Licensa:</label>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="licenseCode" id="livre" value=1 />
+                <label class="form-check-label" for="livre">Livre</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="licenseCode" id="proprietario" value=2 />
+                <label class="form-check-label" for="proprietario">Proprietário</label>
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-between">
+              <a href="software-lista-adm.html" class="btn btn-secondary">
+                <i class="bi bi-x-circle"></i> Cancelar
+              </a>
+              <button type="submit" class="btn btn-submit">
+                <i class="bi bi-save"></i> Salvar Alterações
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    
+    const softwareId = params.get("id");
+    console.log("softwareId: ", softwareId);
+    const API_BASE = "http://localhost:8080/software";
+
+    async function carregarSoftware() {
+      if (!softwareId) {
+        alert("ID do software não informado.");
+        return;
+      }
+
+      try {
+        const response = await fetch(`${API_BASE}/${softwareId}`, {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+          "Content-Type": "application/json",
+        },
+      });
+        if (!response.ok) throw new Error("Erro ao carregar dados");
+
+        const software = await response.json();
+
+        document.getElementById("nome").value = software.softwareName;
+        document.getElementById("versao").value = software.softwareVersion;
+        document.getElementById("linksoftware").value = software.softwareLink;
+
+        if (software.licenseCode === 1) {
+          document.getElementById("livre").checked = true;
+        } else {
+          document.getElementById("proprietario").checked = true;
+        }
+      } catch (error) {
+        console.error(error);
+        alert("Erro ao carregar o software.");
+      }
+    }
+
+    document.getElementById("editarSoftwareForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const softwareName = document.getElementById("nome").value;
+      const softwareVersion = document.getElementById("versao").value;
+      const softwareLink = document.getElementById("linksoftware").value;
+      const licenseCode = document.querySelector("input[name='licenseCode']:checked").value;
+      const softwareDescription = ""
+      const softwareAuthor = ""
+
+      try {
+        const response = await fetch(`${API_BASE}/${softwareId}`, {
+          method: "PUT",
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ 
+            softwareName, 
+            softwareDescription,
+            softwareVersion,
+            softwareAuthor, 
+            softwareLink, 
+            licenseCode })
+        });
+
+        if (response.status === 204) {
+          alert("Software atualizado com sucesso!");
+          window.location.href = "software-lista-adm.html";
+        } else {
+          throw new Error("Erro ao atualizar software");
+        }
+      } catch (error) {
+        console.error(error);
+        alert("Erro ao atualizar o software.");
+      }
+    });
+
+    carregarSoftware();
+  </script>
+</body>
+</html>

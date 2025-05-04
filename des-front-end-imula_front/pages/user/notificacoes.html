@@ -1,0 +1,233 @@
+<!-- Notificação dos softwares -->
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InstaLab - Notificações</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --color1: #2d2d29;
+            --color2: #215a6d;
+            --color3: #3ca2a2;
+            --color4: #92c7a3;
+            --color5: #dfece6;
+        }
+        body {
+            background-color: var(--color5);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .header {
+            background-color: var(--color1);
+            color: white;
+            position: relative;
+        }
+        .btn-voltar {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: var(--color3);
+            border: none;
+            padding: 5px 15px;
+            border-radius: 5px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .btn-voltar:hover {
+            background-color: #2e8b8b;
+        }
+        .solicitacao-card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        .solicitacao-card:hover {
+            transform: translateY(-5px);
+        }
+        .badge-status {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+        .badge-andamento {
+            background-color: #cce5ff;
+            color: #004085;
+        }
+        .badge-aprovado {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .badge-negado {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .software-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        .software-instalado {
+            color: #28a745;
+        }
+        .software-pendente {
+            color: #ffc107;
+        }
+        .software-negado {
+            color: #dc3545;
+        }
+        .notificacao-nova {
+            border-left: 4px solid var(--color3);
+        }
+    </style>
+</head>
+<body>
+    <header class="header p-3 mb-4">
+        <h1><i class="bi bi-bell-fill"></i> Notificações</h1>
+        <a href="professor-menu.html" class="btn btn-voltar">
+            <i class="bi bi-arrow-left"></i> Voltar
+        </a>
+    </header>
+
+    <div class="container">
+
+        <div class="row">
+            <!-- Notificação 1 - Aprovada -->
+            <div class="col-lg-6 mb-4">
+                <div class="card solicitacao-card h-100 notificacao-nova">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h5 class="card-title">Solicitação Aprovada</h5>
+                                <p class="text-muted mb-2">
+                                    <i class="bi bi-calendar-event"></i> 15/06/2023 - 10:32
+                                </p>
+                            </div>
+                            <span class="badge badge-status badge-aprovado">Aprovado</span>
+                        </div>
+
+                        <hr>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6><i class="bi bi-person-video3"></i> Professor:</h6>
+                                <p>Prof. Marcos Souza</p>
+                                
+                                <h6><i class="bi bi-pc-display"></i> Laboratório:</h6>
+                                <p>Lab 3 - Design</p>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <h6><i class="bi bi-collection"></i> Softwares Aprovados:</h6>
+                                <ul class="softwares-list">
+                                    <li class="software-item">
+                                        <i class="bi bi-check-circle-fill software-instalado me-2"></i>
+                                        <span>Photoshop (2023)</span>
+                                    </li>
+                                    <li class="software-item">
+                                        <i class="bi bi-check-circle-fill software-instalado me-2"></i>
+                                        <span>Illustrator (2023)</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notificação 2 - Em andamento -->
+            <div class="col-lg-6 mb-4">
+                <div class="card solicitacao-card h-100 notificacao-nova">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h5 class="card-title">Solicitação em Processo</h5>
+                                <p class="text-muted mb-2">
+                                    <i class="bi bi-calendar-event"></i> 14/06/2023 - 16:45
+                                </p>
+                            </div>
+                            <span class="badge badge-status badge-andamento">Em andamento</span>
+                        </div>
+
+                        <hr>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6><i class="bi bi-person-video3"></i> Professor:</h6>
+                                <p>Prof. Ana Oliveira</p>
+                                
+                                <h6><i class="bi bi-pc-display"></i> Laboratório:</h6>
+                                <p>Lab 5 - Programação</p>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <h6><i class="bi bi-collection"></i> Status:</h6>
+                                <ul class="softwares-list">
+                                    <li class="software-item">
+                                        <i class="bi bi-hourglass-split software-pendente me-2"></i>
+                                        <span>Visual Studio Code - Em análise</span>
+                                    </li>
+                                    <li class="software-item">
+                                        <i class="bi bi-hourglass-split software-pendente me-2"></i>
+                                        <span>Python 3.11 - Em análise</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notificação 3 - Negada -->
+            <div class="col-lg-6 mb-4">
+                <div class="card solicitacao-card h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h5 class="card-title">Solicitação Negada</h5>
+                                <p class="text-muted mb-2">
+                                    <i class="bi bi-calendar-event"></i> 10/06/2023 - 09:15
+                                </p>
+                            </div>
+                            <span class="badge badge-status badge-negado">Negado</span>
+                        </div>
+
+                        <hr>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6><i class="bi bi-person-video3"></i> Professor:</h6>
+                                <p>Prof. Carlos Mendes</p>
+                                
+                                <h6><i class="bi bi-pc-display"></i> Laboratório:</h6>
+                                <p>Lab 2 - Multimídia</p>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <h6><i class="bi bi-collection"></i> Motivo:</h6>
+                                <p class="text-danger">Licença do software não disponível</p>
+                                
+                                <h6><i class="bi bi-software"></i> Software Negado:</h6>
+                                <ul class="softwares-list">
+                                    <li class="software-item">
+                                        <i class="bi bi-x-circle-fill software-negado me-2"></i>
+                                        <span>Adobe Premiere Pro (2023)</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

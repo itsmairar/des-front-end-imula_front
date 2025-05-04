@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InstaLab - Administrador</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --color1: #2d2d29;
+            --color2: #215a6d;
+            --color3: #3ca2a2;
+            --color4: #92c7a3;
+            --color5: #dfece6;
+        }
+        body {
+            background-color: var(--color5);
+        }
+        .card-menu {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .btn-menu {
+            background-color: var(--color2);
+            color: white;
+        }
+        .header {
+            background-color: var(--color1);
+            color: white;
+            position: relative;
+        }
+        .btn-logout {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: var(--color3);
+            border: none;
+            padding: 5px 15px;
+            border-radius: 5px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .btn-logout:hover {
+            background-color: #2e8b8b;
+        }
+        .solicitacao-card {
+            border-radius: 10px;
+            border-left: 4px solid var(--color3);
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+        .solicitacao-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        .badge-status {
+            font-size: 0.8rem;
+            padding: 5px 10px;
+        }
+        .badge-pendente {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        .softwares-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .software-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        .software-instalado {
+            color: var(--color4);
+        }
+        .software-pendente {
+            color: #dc3545;
+            font-weight: 500;
+        }
+        .btn-acao {
+            width: 100%;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header class="header p-3 mb-4">
+        <h1><i class="bi bi-shield-lock"></i> Painel do Administrador</h1>
+        <a href="/pages/index.html" class="btn btn-logout">
+            <i class="bi bi-box-arrow-left"></i> Sair
+        </a>
+    </header>
+
+    <div class="container">
+        <div class="row g-4">
+            <!-- Cadastrar Software -->
+            <div class="col-md-4">
+                <div class="card card-menu h-100">
+                    <div class="card-body text-center">
+                        <i class="bi bi-plus-circle-fill text-primary fs-1 mb-3"></i>
+                        <h3>Cadastrar Software</h3>
+                        <p>Adicione um novo software ao sistema.</p>
+                        <a href="software-cadastro.html" class="btn btn-menu w-100">
+                            Acessar <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Listar Softwares -->
+            <div class="col-md-4">
+                <div class="card card-menu h-100">
+                    <div class="card-body text-center">
+                        <i class="bi bi-list-check text-success fs-1 mb-3"></i>
+                        <h3>Gerenciar Softwares</h3>
+                        <p>Visualize e edite os softwares cadastrados.</p>
+                        <a href="software-lista-adm.html" class="btn btn-menu w-100">
+                            Acessar <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cadastrar Laboratório -->
+            <div class="col-md-4">
+                <div class="card card-menu h-100">
+                    <div class="card-body text-center">
+                        <i class="bi bi-building text-warning fs-1 mb-3"></i>
+                        <h3>Cadastrar Laboratório</h3>
+                        <p>Adicione um novo laboratório ao sistema.</p>
+                        <a href="laboratorio-cadastro.html" class="btn btn-menu w-100">
+                            Acessar <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NOVO: Gerenciar Laboratórios -->
+            <div class="col-md-4">
+                <div class="card card-menu h-100">
+                    <div class="card-body text-center">
+                        <i class="bi bi-buildings text-info fs-1 mb-3"></i>
+                        <h3>Gerenciar Laboratórios</h3>
+                        <p>Visualize e edite os laboratórios cadastrados.</p>
+                        <a href="laboratorio-lista-adm.html" class="btn btn-menu w-100">
+                            Acessar <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cadastrar Usuário -->
+            <div class="col-md-4">
+                <div class="card card-menu h-100">
+                    <div class="card-body text-center">
+                        <i class="bi bi-person-plus text-secondary fs-1 mb-3"></i>
+                        <h3>Cadastrar Professor</h3>
+                        <p>Registre um novo usuário professor.</p>
+                        <a href="professor-cadastro.html" class="btn btn-menu w-100">
+                            Acessar <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção de Solicitações -->
+        <div class="mt-5">
+            <h3 class="mb-4"><i class="bi bi-list-task"></i> Solicitações Pendentes</h3>
+            
+            <!-- Card de Solicitação 1 -->
+            <div class="card solicitacao-card mb-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h5 class="card-title">Prof. Carlos Silva</h5>
+                            <p class="text-muted mb-2">
+                                <i class="bi bi-calendar-event"></i> Solicitado em: 15/06/2023
+                            </p>
+                        </div>
+                        <span class="badge badge-status badge-pendente">Pendente</span>
+                    </div>
+
+                    <hr>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6><i class="bi bi-calendar-check"></i> Data de Utilização:</h6>
+                            <p>20/06/2023</p>
+                            
+                            <h6><i class="bi bi-pc-display"></i> Laboratório:</h6>
+                            <p>Lab 2 - Engenharia</p>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <h6><i class="bi bi-collection"></i> Softwares:</h6>
+                            <ul class="softwares-list">
+                                <li class="software-item">
+                                    <i class="bi bi-check-circle-fill software-instalado me-2"></i>
+                                    <span>MATLAB (R2023a) - <em>Instalado</em></span>
+                                </li>
+                                <li class="software-item">
+                                    <i class="bi bi-exclamation-circle-fill software-pendente me-2"></i>
+                                    <span>AutoCAD (2024) - <em>Pendente</em></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-2 mt-3">
+                        <button class="btn btn-success btn-acao" onclick="finalizarSolicitacao(1)">
+                            <i class="bi bi-check-circle"></i> Finalizar
+                        </button>
+                        <button class="btn btn-primary btn-acao" data-bs-toggle="modal" data-bs-target="#editarSolicitacaoModal" onclick="carregarSolicitacao(1)">
+                            <i class="bi bi-pencil"></i> Editar
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-end mt-3">
+                <a href="solicitacoes.html" class="btn btn-outline-secondary">
+                    Ver todas as solicitações <i class="bi bi-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Edição -->
+    <div class="modal fade" id="editarSolicitacaoModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="bi bi-pencil"></i> Editar Solicitação</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editarSolicitacaoForm">
+                        <div class="mb-3">
+                            <label class="form-label">Laboratório</label>
+                            <select class="form-select" id="laboratorioEdit">
+                                <option value="1">Lab 1 - Informática</option>
+                                <option value="2" selected>Lab 2 - Engenharia</option>
+                                <option value="3">Lab 3 - Design</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Softwares Pendentes</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="softwareEdit1" checked>
+                                <label class="form-check-label" for="softwareEdit1">AutoCAD (2024)</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="softwareEdit2" checked>
+                                <label class="form-check-label" for="softwareEdit2">Visual Studio (2022)</label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="salvarEdicao()">Salvar Alterações</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Funções de exemplo para interação
+        function finalizarSolicitacao(id) {
+            if(confirm('Deseja marcar esta solicitação como concluída?')) {
+                alert('Solicitação #' + id + ' finalizada com sucesso!');
+                // Aqui viria a chamada à API
+            }
+        }
+
+        function carregarSolicitacao(id) {
+            // Simula carregamento dos dados da solicitação
+            console.log('Carregando dados da solicitação #' + id);
+        }
+
+        function salvarEdicao() {
+            alert('Alterações salvas com sucesso!');
+            // Fechar modal
+            var modal = bootstrap.Modal.getInstance(document.getElementById('editarSolicitacaoModal'));
+            modal.hide();
+        }
+    </script>
+</body>
+</html>
