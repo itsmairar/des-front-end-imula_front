@@ -199,17 +199,36 @@
         return;
       }
 
-      const softwareNomes = Array.from(selecionados).map(cb => cb.nextElementSibling.textContent.trim());
+      const softwaresSelecionados = Array.from(selecionados).map(cb => cb.value);
 
-      alert('Solicitação enviada com sucesso!\n\nSoftwares: ' +
-        softwareNomes.join(', ') +
-        '\nLaboratório: ' + document.getElementById('laboratorio').selectedOptions[0].text +
-        '\nData: ' + new Date(data).toLocaleDateString('pt-BR'));
+      const payload = {
+        laboratoryId: parseInt(laboratorio),
+        utilizationDate: data,
+        softwaresSolicited: softwaresSelecionados
+      };
 
-      setTimeout(() => {
-        window.location.href = 'professor-menu.html';
-      }, 2000);
+      fetch('http://localhost:8080/solicitation/new', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + token,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      })
+        .then(res => {
+          if (!res.ok) throw new Error('Erro ao enviar solicitação');
+          return res;
+        })
+        .then(() => {
+          alert('Solicitação enviada com sucesso!');
+          window.location.href = 'professor-menu.html';
+        })
+        .catch(err => {
+          console.error(err);
+          alert('Erro ao enviar a solicitação. Verifique os dados e tente novamente.');
+        });
     });
+
   </script>
 </body>
 
