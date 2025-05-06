@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>InstaLab - Editar Usuário</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <style>
+    :root {
+      --color1: #2d2d29;
+      --color2: #215a6d;
+      --color3: #3ca2a2;
+      --color4: #92c7a3;
+      --color5: #dfece6;
+    }
+    body {
+      background-color: var(--color5);
+    }
+    .form-container {
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .btn-submit {
+      background-color: var(--color2);
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="form-container p-4">
+          <h2 class="mb-4"><i class="bi bi-pencil"></i> Editar Usuário</h2>
+
+          <form id="editarSoftwareForm">
+            <!-- Nome -->
+            <div class="mb-3">
+              <label for="nome" class="form-label">Nome do Usuário:</label>
+              <input type="text" class="form-control" id="nome"  />
+            </div>
+
+            <!-- Email -->
+            <div class="mb-3">
+              <label for="versao" class="form-label">Email:</label>
+              <input type="text" class="form-control" id="email"  />
+            </div>
+
+            <!-- Senha -->
+            <div class="mb-3">
+              <label for="linksoftware" class="form-label">Senha:</label>
+              <input type="password" class="form-control" id="senha"  />
+            </div>
+
+            <!-- Instituicao -->
+            <div class="mb-3">
+              <label for="linksoftware" class="form-label">Instituição:</label>
+              <input type="text" class="form-control" id="instituicao"  />
+            </div>
+
+            <!-- Tipo -->
+            <div class="mb-3">
+              <label class="form-label">Perfil:</label>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="perfil" id="livre" value="ROLE_ADMIN" />
+                <label class="form-check-label" for="livre">Administrador</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="perfil" id="proprietario" value="ROLE_USER" />
+                <label class="form-check-label" for="proprietario">Comum</label>
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-between">
+              <a href="professor-gerenciamento.html" class="btn btn-secondary">
+                <i class="bi bi-x-circle"></i> Cancelar
+              </a>
+              <div>
+                <button type="submit" class="btn btn-submit">
+                  <i class="bi bi-save"></i> Salvar Alterações
+                </button>
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#meuModal">Excluir</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de confirmação de exclusao -->
+  <div class="modal fade" id="meuModal" tabindex="-1" aria-labelledby="meuModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="meuModalLabel">Confimação de Exclusão</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+        <div class="modal-body">
+          Deseja excluir este usuário?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" onclick="deleteUser()">Confirmar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    
+    const userId = params.get("id");
+    console.log("softwareId: ", userId);
+    const API_BASE = "http://localhost:8080/user";
+
+    async function carregarSoftware() {
+      if (!userId) {
+        alert("ID do usuario não informado.");
+        return;
+      }
+
+      try {
+        const response = await fetch(`${API_BASE}/${userId}`, {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+          "Content-Type": "application/json",
+        },
+      });
+        if (!response.ok) throw new Error("Erro ao carregar dados");
+
+        const user = await response.json();
+
+        document.getElementById("nome").value = user.fullname;
+        document.getElementById("email").value = user.email;
+        document.getElementById("senha").value = '';
+        document.getElementById("instituicao").value = user.enterprise;
+        document.querySelector(`input[name="perfil"][value="${user.roles[0].name}"]`).checked = true;
+        
+      } catch (error) {
+        console.error(error);
+        alert("Erro ao carregar o usuario.");
+      }
+    }
+
+    document.getElementById("editarSoftwareForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const fullname = document.getElementById("nome").value;
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("senha").value;
+      const enterprise = document.getElementById("instituicao").value;
+      const roles = [document.querySelector('input[name="perfil"]:checked').value]
+      
+
+      try {
+        const response = await fetch(`${API_BASE}/${userId}`, {
+          method: "PUT",
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ 
+            fullname, 
+            email,
+            password, 
+            enterprise,
+            roles
+          })
+        });
+
+        if (response.status === 204) {
+          alert("Software atualizado com sucesso!");
+          window.location.href = "professor-gerenciamento.html";
+        } else {
+          throw new Error("Erro ao atualizar software");
+        }
+      } catch (error) {
+        console.error(error);
+        alert("Erro ao atualizar o software.");
+      }
+    });
+    
+    async function deleteUser(){
+      try {
+        const response = await fetch(`${API_BASE}/${userId}`, {
+          method: "DELETE",
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+            "Content-Type": "application/json",
+          }
+        });
+
+        if (response.status === 204) {
+          alert("Usuário deletado com sucesso!");
+          window.location.href = "professor-gerenciamento.html";
+        } else {
+          throw new Error("Erro ao atualizar software");
+        }
+      } catch (error) {
+        console.error(error);
+        alert("Erro ao atualizar o software.");
+      }
+    }
+    carregarSoftware();
+  </script>
+</body>
+</html>
