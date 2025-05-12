@@ -85,9 +85,9 @@
 
         const laboratories = await response.json();
 
-        console.log("Laboratórios recebidos:", laboratories);  // Verificar resposta
+        console.log("Laboratórios recebidos:", laboratories);  
 
-        labTableBody.innerHTML = ""; // Limpa antes
+        labTableBody.innerHTML = ""; 
 
         laboratories.forEach(lab => {
             const row = document.createElement("tr");

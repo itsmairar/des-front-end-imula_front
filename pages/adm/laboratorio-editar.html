@@ -90,13 +90,11 @@
 
                 const laboratory = await response.json();
 
-                // Preenche os campos do formulário com os dados do laboratório
                 document.getElementById("laboratoryName").value = laboratory.laboratoryName;
                 document.getElementById("laboratoryAvailability").checked = laboratory.laboratoryAvailability;
 
-                // Preenche a lista de softwares instalados
                 const softwareListDiv = document.getElementById("softwareList");
-                softwareListDiv.innerHTML = ""; // Limpar antes de adicionar
+                softwareListDiv.innerHTML = ""; 
 
                 const softwaresResponse = await fetch(`http://localhost:8080/software`, {
                     headers: {
