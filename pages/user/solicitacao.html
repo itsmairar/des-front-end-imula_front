@@ -110,10 +110,11 @@
     const token = localStorage.getItem('token');
 
     document.addEventListener('DOMContentLoaded', () => {
-      // Carregar softwares
-      fetch('http://localhost:8080/software', {
+      fetch('http://localhost:8080/ms-software/software', {
+        method: "GET",
         headers: {
-          'Authorization': 'Bearer ' + token
+          Authorization: 'Bearer ' + token,
+          "Content-Type": "application/json"
         }
       })
         .then(res => {
@@ -137,7 +138,7 @@
               <input class="form-check-input" type="checkbox" id="${checkboxId}" name="software"
                 value="${software.softwareId}">
               <label class="form-check-label" for="${checkboxId}">
-                ${software.softwareName} (${software.softwareVersion} - ${software.licenseModel.licenseName})
+                ${software.softwareName} (${software.softwareVersion} - ${software.license})
               </label>
             `;
             container.appendChild(div);
@@ -149,8 +150,7 @@
             '<div class="text-danger">Erro ao carregar softwares. Verifique o servidor ou login.</div>';
         });
 
-      // Carregar laboratórios
-      fetch('http://localhost:8080/laboratory', {
+      fetch('http://localhost:8080/ms-laboratorio/laboratory', {
         headers: {
           'Authorization': 'Bearer ' + token
         }

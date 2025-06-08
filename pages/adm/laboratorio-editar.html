@@ -76,8 +76,8 @@
             }
 
             try {
-                // Fetch do laboratório por ID
-                const response = await fetch(`http://localhost:8080/laboratory/${labId}`, {
+                
+                const response = await fetch(`http://localhost:8080/ms-laboratorio/laboratory/${labId}`, {
                     headers: {
                         Authorization: "Bearer " + localStorage.getItem("token"),
                         "Content-Type": "application/json",
@@ -96,7 +96,7 @@
                 const softwareListDiv = document.getElementById("softwareList");
                 softwareListDiv.innerHTML = ""; 
 
-                const softwaresResponse = await fetch(`http://localhost:8080/software`, {
+                const softwaresResponse = await fetch(`http://localhost:8080/ms-software/software`, {
                     headers: {
                         Authorization: "Bearer " + token,
                         "Content-Type": "application/json"
@@ -114,7 +114,7 @@
                     checkbox.value = software.softwareId;
                     checkbox.id = `software-${software.softwareId}`;
 
-                    if (laboratory.softwaresInstalled.some(s => s.softwareId === software.softwareId)) {
+                    if (laboratory.softwaresInstalled.includes(software.softwareId)) {
                         checkbox.checked = true;
                     }
 
@@ -144,7 +144,7 @@
                     };
 
 
-                    const updateResponse = await fetch(`http://localhost:8080/laboratory/${labId}`, {
+                    const updateResponse = await fetch(`http://localhost:8080/ms-laboratorio/laboratory/${labId}`, {
                         method: "PUT",
                         headers: {
                             Authorization: "Bearer " + localStorage.getItem("token"),

@@ -98,13 +98,12 @@
             };
 
             try {
-                const token = localStorage.getItem("token");  // Obtém o token do localStorage
-
+                const token = localStorage.getItem("token"); 
                 if (!token) {
                     throw new Error("Token de autenticação não encontrado.");
                 }
 
-                const response = await fetch('http://localhost:8080/laboratory/new', {
+                const response = await fetch('http://localhost:8080/ms-laboratorio/laboratory/new', {
                     method: 'POST',
                     headers: {
                         Authorization: "Bearer " + localStorage.getItem("token"),

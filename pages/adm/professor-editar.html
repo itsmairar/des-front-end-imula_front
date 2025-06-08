@@ -34,7 +34,7 @@
         <div class="form-container p-4">
           <h2 class="mb-4"><i class="bi bi-pencil"></i> Editar Usuário</h2>
 
-          <form id="editarSoftwareForm">
+          <form id="editarUserForm">
             <!-- Nome -->
             <div class="mb-3">
               <label for="nome" class="form-label">Nome do Usuário:</label>
@@ -113,8 +113,8 @@
     const params = new URLSearchParams(window.location.search);
     
     const userId = params.get("id");
-    console.log("softwareId: ", userId);
-    const API_BASE = "http://localhost:8080/user";
+    console.log("userId: ", userId);
+    const API_BASE = "http://localhost:8080/ms-auth/user";
 
     async function carregarSoftware() {
       if (!userId) {
@@ -146,7 +146,7 @@
       }
     }
 
-    document.getElementById("editarSoftwareForm").addEventListener("submit", async function (e) {
+    document.getElementById("editarUserForm").addEventListener("submit", async function (e) {
       e.preventDefault();
 
       const fullname = document.getElementById("nome").value;
@@ -173,7 +173,7 @@
         });
 
         if (response.status === 204) {
-          alert("Software atualizado com sucesso!");
+          alert("Usuário atualizado com sucesso!");
           window.location.href = "professor-gerenciamento.html";
         } else {
           throw new Error("Erro ao atualizar software");

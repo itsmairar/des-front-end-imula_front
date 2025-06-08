@@ -88,7 +88,7 @@
     
     const softwareId = params.get("id");
     console.log("softwareId: ", softwareId);
-    const API_BASE = "http://localhost:8080/software";
+    const API_BASE = "http://localhost:8080/ms-software/software";
 
     async function carregarSoftware() {
       if (!softwareId) {
@@ -112,7 +112,7 @@
         document.getElementById("versao").value = software.softwareVersion;
         document.getElementById("linksoftware").value = software.softwareLink;
 
-        if (software.licenseCode === 1) {
+        if (software.license === "FREE") {
           document.getElementById("livre").checked = true;
         } else {
           document.getElementById("proprietario").checked = true;
